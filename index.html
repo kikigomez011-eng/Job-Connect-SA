@@ -2,150 +2,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Job Connect SA | Find Your Opportunity</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f8f7;
-      color: #18352c;
-    }
-    header {
-      background: #103d30;
-      color: white;
-      padding: 22px 6%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .logo { font-size: 23px; font-weight: bold; }
-    header a { color: white; text-decoration: none; }
-    .hero {
-      background: #e1f1e9;
-      text-align: center;
-      padding: 65px 20px;
-    }
-    .hero h1 { font-size: 36px; margin-bottom: 12px; }
-    .hero p { font-size: 17px; color: #52675d; }
-    .search {
-      max-width: 650px;
-      margin: 28px auto 0;
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-    input, select, button {
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid #ccd8d1;
-      font-size: 15px;
-    }
-    input, select { flex: 1; min-width: 180px; }
-    button {
-      background: #148052;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-    main { padding: 35px 6%; }
-    h2 { text-align: center; }
-    .categories {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 14px;
-      margin-top: 25px;
-    }
-    .category, .job {
-      background: white;
-      padding: 22px;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px #0000000b;
-    }
-    .category { text-align: center; font-weight: bold; }
-    .jobs { max-width: 750px; margin: 35px auto; }
-    .job { margin: 15px 0; }
-    .job p { color: #64746c; }
-    .job button { margin-top: 8px; }
-    footer {
-      background: #103d30;
-      color: white;
-      text-align: center;
-      padding: 25px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Job Connect SA | Find Your Opportunity</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f8f7;
+  color: #18352c;
+}
+header {
+  background: #103d30;
+  color: white;
+  padding: 22px 6%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.logo { font-size: 23px; font-weight: bold; }
+header a { color: white; text-decoration: none; }
+.hero {
+  background: #e1f1e9;
+  text-align: center;
+  padding: 65px 20px;
+}
+.hero h1 { font-size: 36px; margin-bottom: 12px; }
+.hero p { font-size: 17px; color: #52675d; }
+.search {
+  max-width: 750px;
+  margin: 28px auto 0;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+input, select, button {
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccd8d1;
+  font-size: 15px;
+}
+input, select { flex: 1; min-width: 180px; }
+button {
+  background: #148052;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+button:hover { background: #103d30; }
+main { padding: 35px 6%; }
+h2 { text-align: center; }
+.categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 14px;
+  margin-top: 25px;
+}
+.category, .job {
+  background: white;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px #0000000b;
+}
+.category { text-align: center; font-weight: bold; }
+.jobs { max-width: 750px; margin: 35px auto; }
+.job { margin: 15px 0; }
+.job p { color: #64746c; line-height: 1.6; }
+.job h3 { color: #103d30; }
+#resultsCount {
+  text-align: center;
+  color: #52675d;
+}
+footer {
+  background: #103d30;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+.notice { text-align: center; padding: 20px; }
+@media(max-width:600px) {
+  .hero h1 { font-size: 28px; }
+  .search { flex-direction: column; }
+  .search input, .search select, .search button {
+    width: 100%;
+  }
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">💼 Job Connect SA</div>
-    <a href="#jobs">Find Jobs</a>
-  </header>
 
-  <section class="hero">
-    <h1>Your Future Starts Here!</h1>
-    <p>Connecting South Africans with employment opportunities.</p>
-    <div class="search">
-      <input id="keyword" placeholder="Job title or keyword">
-      <select id="province">
-        <option value="">All provinces</option>
-        <option>Gauteng</option>
-        <option>Western Cape</option>
-        <option>KwaZulu-Natal</option>
-        <option>Limpopo</option>
-        <option>Mpumalanga</option>
-        <option>Eastern Cape</option>
-        <option>Free State</option>
-        <option>North West</option>
-        <option>Northern Cape</option>
-      </select>
-      <button onclick="searchJobs()">Search Jobs</button>
-    </div>
-  </section>
+<header>
+  <div class="logo">💼 Job Connect SA</div>
+  <a href="#jobs">Find Jobs</a>
+</header>
 
-  <main>
-    <h2>Explore Job Categories</h2>
-    <div class="categories">
-      <div class="category">🏥 Healthcare</div>
-      <div class="category">🛍️ Retail</div>
-      <div class="category">💻 IT</div>
-      <div class="category">🏨 Hospitality</div>
-      <div class="category">📚 Education</div>
-      <div class="category">🏢 Administration</div>
-      <div class="category">🧹 Cleaning</div>
-      <div class="category">🚚 Driving</div>
-    </div>
+<section class="hero">
+  <h1>Your Future Starts Here!</h1>
+  <p>Connecting South Africans with employment opportunities.</p>
+  <div class="search">
+    <input id="keyword" type="search"
+      placeholder="Job title, company or keyword">
+    <select id="province">
+      <option value="">All provinces</option>
+      <option>Gauteng</option>
+      <option>Western Cape</option>
+      <option>KwaZulu-Natal</option>
+      <option>Limpopo</option>
+      <option>Mpumalanga</option>
+      <option>Eastern Cape</option>
+      <option>Free State</option>
+      <option>North West</option>
+      <option>Northern Cape</option>
+    </select>
+    <button onclick="searchJobs()">Search Jobs</button>
+  </div>
+</section>
 
-    <section class="jobs" id="jobs">
-      <h2>Find Your Next Job</h2>
-      <div id="results">
-        <div class="job">
-          <h3>Welcome to Job Connect SA</h3>
-          <p>Job opportunities across South Africa will appear here.</p>
-        </div>
-      </div>
-    </section>
-  </main>
+<main>
+<h2>Explore Job Categories</h2>
+<div class="categories">
+  <div class="category">🏥 Healthcare</div>
+  <div class="category">🛍️ Retail</div>
+  <div class="category">💻 IT</div>
+  <div class="category">🏨 Hospitality</div>
+  <div class="category">📚 Education</div>
+  <div class="category">🏢 Administration</div>
+  <div class="category">🧹 Cleaning</div>
+  <div class="category">🚚 Driving</div>
+</div>
 
-  <footer>
-    <p>© 2026 Job Connect SA. All rights reserved.</p>
-    <p>Connecting people with opportunities 🇿🇦</p>
-  </footer>
+<section class="jobs" id="jobs">
+<h2>Find Your Next Job</h2>
+<p id="resultsCount"></p>
+<div id="results" aria-live="polite"></div>
+</section>
+</main>
 
-  <script>
-    function searchJobs() {
-      const keyword = document.getElementById("keyword").value;
-      const province = document.getElementById("province").value;
-      document.getElementById("results").innerHTML =
-        "<div class='job'><h3>Job search</h3><p>Search term: " +
-        (keyword || "Any job") +
-        "</p><p>Province: " +
-        (province || "All provinces") +
-        "</p><p>Job listings will be connected here next.</p></div>";
-    }
-  </script>
+<footer>
+<p>© 2026 Job Connect SA. All rights reserved.</p>
+<p>Connecting people with opportunities 🇿🇦</p>
+</footer>
+
+<script>
+// DEMO JOBS FOR TESTING SEARCH
+// These are examples, not verified vacancies.
+
+const jobs = [
+{
+title:"Junior IT Support Assistant",
+company:"Demo Technology Company",
+province:"Gauteng",
+type:"Full-time",
+description:"Entry-level IT support. Basic computer knowledge required."
+},
+{
+title:"Retail Sales Assistant",
+company:"Demo Retail Company",
+province:"Western Cape",
+type:"Part-time",
+description:"Assist customers and organise stock."
+},
+{
+title:"General Worker",
+company:"Demo Services Company",
+province:"KwaZulu-Natal",
+type:"Full-time",
+description:"General workplace duties and operational support."
+},
+{
+title:"Administrative Assistant",
+company:"Demo Office Company",
+province:"Gauteng",
+type:"Full-time",
+description:"Assist with office administration and documents."
+},
+{
+title:"Healthcare Assistant",
+company:"Demo Healthcare Company",
+province:"Limpopo",
+type:"Full-time",
+description:"Support healthcare staff with daily duties."
+},
+{
+title:"Junior Web Developer",
+company:"Demo Digital Company",
+province:"Mpumalanga",
+type:"Internship",
+description:"Learn web development and assist with website projects."
+},
+{
+title:"Hotel Receptionist",
+company:"Demo Hospitality Company",
+province:"Eastern Cape",
+type:"Full-time",
+description:"Welcome guests and assist with bookings."
+},
+{
+title:"Driver",
+company:"Demo Transport Company",
+province:"Free State",
+type:"Full-time",
+description:"Delivery and transport duties. Driving licence required."
+}
+];
+
+function displayJobs(list) {
+const results = document.getElementById("results");
+const count = document.getElementById("resultsCount");
+
+results.innerHTML = "";
+count.textContent = list.length +
+(list.length === 1 ? " demo job found" : " demo jobs found");
+
+if (list.length === 0) {
+results.innerHTML =
+"<div class='job notice'><h3>No matching jobs found</h3>" +
+"<p>Try another keyword or province.</p></div>";
+return;
+}
+
+list.forEach(job => {
+const card = document.createElement("div");
+card.className = "job";
+
+const title = document.createElement("h3");
+title.textContent = job.title;
+
+const company = document.createElement("p");
+company.textContent = "Company: " + job.company;
+
+const location = document.createElement("p");
+location.textContent = "Province: " + job.province;
+
+const type = document.createElement("p");
+type.textContent = "Employment: " + job.type;
+
+const description = document.createElement("p");
+description.textContent = job.description;
+
+const note = document.createElement("p");
+note.textContent = "Demo listing — not a verified vacancy.";
+
+card.append(title, company, location, type, description, note);
+results.appendChild(card);
+});
+}
+
+function searchJobs() {
+const keyword = document.getElementById("keyword")
+.value.trim().toLowerCase();
+
+const province = document.getElementById("province").value;
+
+const filteredJobs = jobs.filter(job => {
+const text = (
+job.title + " " +
+job.company + " " +
+job.province + " " +
+job.type + " " +
+job.description
+).toLowerCase();
+
+return (keyword === "" || text.includes(keyword)) &&
+(province === "" || job.province === province);
+});
+
+displayJobs(filteredJobs);
+
+document.getElementById("jobs").scrollIntoView({
+behavior:"smooth"
+});
+}
+
+document.getElementById("keyword").addEventListener(
+"keydown", function(event) {
+if (event.key === "Enter") searchJobs();
+});
+
+displayJobs(jobs);
+</script>
 </body>
 </html>
+
