@@ -215,7 +215,7 @@ const count = document.getElementById("resultsCount");
 
 results.innerHTML = "";
 count.textContent = list.length +
-(list.length === 1 ? " demo job found" : " demo jobs found");
+(list.length === 1 ? " job found" : "  jobs found");
 
 if (list.length === 0) {
 results.innerHTML =
@@ -244,7 +244,7 @@ const description = document.createElement("p");
 description.textContent = job.description;
 
 const note = document.createElement("p");
-note.textContent = "Demo listing — not a verified vacancy.";
+note.textContent = note.textContent = "Live vacancy from Adzuna";
 
 card.append(title, company, location, type, description, note);
 results.appendChild(card);
@@ -291,7 +291,7 @@ document.getElementById("keyword").addEventListener(
 if (event.key === "Enter") searchJobs();
 });
 
-displayJobs(jobs);
+
 </script>
 </body>
 </html>
