@@ -251,30 +251,39 @@ results.appendChild(card);
 });
 }
 
-function searchJobs() {
-const keyword = document.getElementById("keyword")
-.value.trim().toLowerCase();
+async function searchJobs() {
+  const keyword = document.getElementById("keyword").value.trim();
+  const province = document.getElementById("province").value.trim();
 
-const province = document.getElementById("province").value;
+  const url = new URL(
+    "https://job-connect-sa-api.kikigomez011.workers.dev/api/jobs"
+  );
 
-const filteredJobs = jobs.filter(job => {
-const text = (
-job.title + " " +
-job.company + " " +
-job.province + " " +
-job.type + " " +
-job.description
-).toLowerCase();
+  if (keyword) url.searchParams.set("keyword", keyword);
+  if (province) url.searchParams.set("location", province);
 
-return (keyword === "" || text.includes(keyword)) &&
-(province === "" || job.province === province);
-});
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("API request failed");
 
-displayJobs(filteredJobs);
+    const data = await response.json();
 
-document.getElementById("jobs").scrollIntoView({
-behavior:"smooth"
-});
+    const realJobs = (data.results || []).map(job => ({
+      title: job.title || "Untitled job",
+      company: job.company?.display_name || "Company not listed",
+      province: job.location?.display_name || "",
+      type: job.contract_type || "Not specified",
+      description: job.description || "",
+      note: "Live job listing"
+    }));
+
+    displayJobs(realJobs);
+
+  } catch (error) {
+    document.getElementById("results").innerHTML =
+      "<div class='job notice'><h3>Unable to load jobs</h3><p>Please try again shortly.</p></div>";
+    document.getElementById("resultsCount").textContent = "";
+  }
 }
 
 document.getElementById("keyword").addEventListener(
