@@ -251,7 +251,17 @@ function displayJobs(list) {
     const note = document.createElement("p");
     note.textContent = "Live vacancy from Adzuna";
 
+  if (job.applyUrl) {
+    const applyButton = document.createElement("a");
+    applyButton.href = job.applyUrl;
+    applyButton.textContent = "Apply Now";
+    applyButton.target = "_blank";
+    applyButton.rel = "noopener noreferrer";
+    applyButton.style.cssText = "display:inline-block;margin-top:18px;padding:12px 22px;background:#1c4033;color:white;text-decoration:none;border-radius:10px;font-weight:bold;";
+    card.append(title, company, location, type, description, note, applyButton);
+} else {
     card.append(title, company, location, type, description, note);
+}
     results.appendChild(card);
   });
 
@@ -268,7 +278,10 @@ function displayJobs(list) {
   }
 }
 
-async function fetchJobPage(page, append = false) {
+async function fetchJobPage(page, append = false) {document.getElementById("results").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+});
   const keyword = document.getElementById("keyword").value.trim();
   const province = document.getElementById("province").value.trim();
 
@@ -296,7 +309,7 @@ async function fetchJobPage(page, append = false) {
     type: job.contract_type || "Not specified",
     description: job.description || ""
   }));
-
+applyUrl: job.redirect_url || "",
   loadedJobs = append
     ? [...loadedJobs, ...newJobs]
     : newJobs;
