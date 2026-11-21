@@ -279,7 +279,178 @@ async function searchJobs() {
 
     displayJobs(realJobs);
 
+
+let currentPage = 1;
+let loadedJobs = 0;
+let hasMoreJobs = false;
+let isLoadingJobs = false;
+
+let currentKeyword = "";
+let currentProvince = "";
+
+function displayJobs(list, append = false) {
+  const results = document.getElementById("results");
+  const count = document.getElementById("resultsCount");
+
+  const oldButton = document.getElementById("loadMoreJobs");
+  if (oldButton) oldButton.remove();
+
+  if (!append) {
+    results.innerHTML = "";
+    loadedJobs = 0;
+  }
+
+  if (list.length === 0 && !append) {
+    results.innerHTML =
+      "<div class='job notice'><h3>No matching jobs found</h3>" +
+      "<p>Try another keyword or province.</p></div>";
+    count.textContent = "";
+    return;
+  }
+
+  list.forEach(job => {
+    const card = document.createElement("div");
+    card.className = "job";
+
+    const title = document.createElement("h3");
+    title.textContent = job.title;
+
+    const company = document.createElement("p");
+    company.textContent = "Company: " + job.company;
+
+    const location = document.createElement("p");
+    location.textContent = "Province: " + job.province;
+
+    const type = document.createElement("p");
+    type.textContent = "Employment: " + job.type;
+
+    const description = document.createElement("p");
+    description.textContent = job.description;
+
+    const note = document.createElement("p");
+    note.textContent = "Live vacancy from Adzuna";
+
+    card.append(title, company, location, type, description, note);
+    results.appendChild(card);
+  });
+
+  loadedJobs += list.length;
+  count.textContent = loadedJobs + " jobs loaded";
+
+  if (hasMoreJobs) {
+    const button = document.createElement("button");
+    button.id = "loadMoreJobs";
+    button.textContent = "Load More Jobs";
+    button.type = "button";
+    button.onclick = loadMoreJobs;
+
+    results.appendChild(button);
+  }
+}
+
+async function fetchJobPage(page, append = false) {
+  const url = new URL(
+    "https://job-connect-sa-api.kikigomez011.workers.dev/api/jobs"
+  );
+
+  if (currentKeyword) {
+    url.searchParams.set("keyword", currentKeyword);
+  }
+
+  if (currentProvince) {
+    url.searchParams.set("location", currentProvince);
+  }
+
+  url.searchParams.set("page", page);
+
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("API request failed");
+  }
+
+  const data = await response.json();
+
+  const realJobs = (data.results || []).map(job => ({
+    title: job.title || "Untitled job",
+    company: job.company?.display_name || "Company not listed",
+    province: job.location?.display_name || "",
+    type: job.contract_type || "Not specified",
+    description: job.description || ""
+  }));
+
+  hasMoreJobs =
+    realJobs.length === 20 &&
+    (typeof data.count !== "number" || data.count > page * 20);
+
+  displayJobs(realJobs, append);
+}
+
+async function searchJobs() {
+  if (isLoadingJobs) return;
+
+  currentKeyword =
+    document.getElementById("keyword").value.trim();
+
+  currentProvince =
+    document.getElementById("province").value.trim();
+
+  currentPage = 1;
+  loadedJobs = 0;
+  hasMoreJobs = false;
+  isLoadingJobs = true;
+
+  const results = document.getElementById("results");
+  const count = document.getElementById("resultsCount");
+
+  results.innerHTML =
+    "<div class='job notice'>Loading jobs, please wait...</div>";
+  count.textContent = "";
+
+  results.scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
+  try {
+    await fetchJobPage(1, false);
   } catch (error) {
+    results.innerHTML =
+      "<div class='job notice'><h3>Unable to load jobs</h3>" +
+      "<p>Please try again shortly.</p></div>";
+    count.textContent = "";
+  } finally {
+    isLoadingJobs = false;
+  }
+}
+
+async function loadMoreJobs() {
+  if (isLoadingJobs || !hasMoreJobs) return;
+
+  isLoadingJobs = true;
+
+  const button = document.getElementById("loadMoreJobs");
+
+  if (button) {
+    button.textContent = "Loading more jobs...";
+    button.disabled = true;
+  }
+
+  try {
+    currentPage++;
+    await fetchJobPage(currentPage, true);
+  } catch (error) {
+    currentPage--;
+
+    if (button) {
+      button.textContent = "Try Again";
+      button.disabled = false;
+    }
+  } finally {
+    isLoadingJobs = false;
+  }
+}
+
     document.getElementById("results").innerHTML =
       "<div class='job notice'><h3>Unable to load jobs</h3><p>Please try again shortly.</p></div>";
     document.getElementById("resultsCount").textContent = "";
