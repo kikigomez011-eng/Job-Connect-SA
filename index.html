@@ -90,61 +90,312 @@ footer {
     width: 100%;
   }
 }
+/* JOB CONNECT SA - PREMIUM HOMEPAGE DESIGN */
+
+header.site-header {
+  background: #123d30;
+  color: white;
+  padding: 22px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.site-header .logo {
+  font-size: 25px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.site-header nav {
+  display: flex;
+  gap: 25px;
+  flex-wrap: wrap;
+}
+
+.site-header nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.site-header nav a:hover {
+  color: #b9e5c9;
+}
+
+.hero {
+  background: linear-gradient(135deg, #e5f1e9, #f7faf7);
+  padding: 95px 6%;
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 1000px;
+  margin: auto;
+}
+
+.eyebrow {
+  color: #32835b;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  color: #123d30;
+  font-size: 52px;
+  line-height: 1.15;
+  max-width: 800px;
+  margin: 22px auto;
+}
+
+.hero-content > p:not(.eyebrow):not(.hero-note) {
+  color: #596b61;
+  font-size: 19px;
+  line-height: 1.7;
+  max-width: 700px;
+  margin: 0 auto 30px;
+}
+
+.search {
+  max-width: 950px;
+  margin: 35px auto 20px;
+  display: flex;
+  gap: 12px;
+  background: white;
+  padding: 14px;
+  border-radius: 16px;
+  box-shadow: 0 12px 35px #123d3018;
+}
+
+.search input,
+.search select {
+  flex: 1;
+  min-width: 0;
+  padding: 17px;
+  border: 1px solid #dce5df;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+.search button {
+  background: #26784e;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 17px 27px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.search button:hover {
+  background: #185d3a;
+}
+
+.hero-note {
+  color: #32835b;
+  font-weight: 600;
+  margin-top: 25px;
+}
+
+.categories-section {
+  padding: 75px 6%;
+  text-align: center;
+  background: #f7faf8;
+}
+
+.categories-section h2,
+.jobs h2 {
+  color: #123d30;
+  font-size: 34px;
+}
+
+.categories-section > p {
+  color: #65756b;
+  margin-bottom: 35px;
+}
+
+.categories {
+  max-width: 1100px;
+  margin: 35px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.category {
+  background: white;
+  padding: 30px 15px;
+  border-radius: 16px;
+  box-shadow: 0 5px 20px #123d3010;
+  font-weight: 700;
+  color: #234b39;
+  transition: transform 0.2s;
+}
+
+.category:hover {
+  transform: translateY(-5px);
+}
+
+.jobs {
+  padding: 70px 6%;
+  background: white;
+}
+
+.employer-section {
+  background: #123d30;
+  color: white;
+  padding: 65px 6%;
+  text-align: center;
+}
+
+.employer-section h2 {
+  font-size: 32px;
+}
+
+.employer-section p {
+  line-height: 1.7;
+}
+
+.employer-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 14px 28px;
+  background: #b9e5c9;
+  color: #123d30;
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: 800;
+}
+
+footer {
+  background: #0b2b21;
+  color: white;
+  text-align: center;
+  padding: 25px;
+}
+
+@media (max-width: 700px) {
+  header.site-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .site-header nav {
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .hero {
+    padding: 65px 5%;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .search {
+    flex-direction: column;
+  }
+
+  .search input,
+  .search select,
+  .search button {
+    width: 100%;
+  }
+
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .categories-section h2,
+  .jobs h2 {
+    font-size: 27px;
+  }
+}
+
 </style>
 </head>
 <body>
 
-<header>
+
+<header class="site-header">
   <div class="logo">💼 Job Connect SA</div>
-  <a href="#jobs">Find Jobs</a>
+  <nav>
+    <a href="#jobs">Find Jobs</a>
+    <a href="#categories">Categories</a>
+    <a href="#employers">For Employers</a>
+  </nav>
 </header>
 
 <section class="hero">
-  <h1>Find Your Next Opportunity!</h1>
-  <p>Discover jobs, connect with employers, and take the next step toward your future.</p>
-  <div class="search">
-    <input id="keyword" type="search"
-      placeholder="Job title, company or keyword">
-    <select id="province">
-      <option value="">All provinces</option>
-      <option>Gauteng</option>
-      <option>Western Cape</option>
-      <option>KwaZulu-Natal</option>
-      <option>Limpopo</option>
-      <option>Mpumalanga</option>
-      <option>Eastern Cape</option>
-      <option>Free State</option>
-      <option>North West</option>
-      <option>Northern Cape</option>
-    </select>
-    <button onclick="searchJobs()">Search Jobs</button>
+  <div class="hero-content">
+    <p class="eyebrow">SOUTH AFRICA'S JOB CONNECTION PLATFORM</p>
+    <h1>Your Next Opportunity Starts Here.</h1>
+    <p>Discover exciting career opportunities, connect with employers and take the next step towards your future.</p>
+
+    <div class="search">
+      <input id="keyword" type="search"
+        placeholder="Job title, company or keyword">
+
+      <select id="province">
+        <option value="">All provinces</option>
+        <option>Gauteng</option>
+        <option>Western Cape</option>
+        <option>KwaZulu-Natal</option>
+        <option>Limpopo</option>
+        <option>Mpumalanga</option>
+        <option>Eastern Cape</option>
+        <option>Free State</option>
+        <option>North West</option>
+        <option>Northern Cape</option>
+      </select>
+
+      <button onclick="searchJobs()">Search Jobs</button>
+    </div>
+
+    <p class="hero-note">Find opportunities. Build your future. 🇿🇦</p>
   </div>
 </section>
 
 <main>
-<h2>Explore Job Categories</h2>
-<div class="categories">
-  <div class="category">🏥 Healthcare</div>
-  <div class="category">🛍️ Retail</div>
-  <div class="category">💻 IT</div>
-  <div class="category">🏨 Hospitality</div>
-  <div class="category">📚 Education</div>
-  <div class="category">🏢 Administration</div>
-  <div class="category">🧹 Cleaning</div>
-  <div class="category">🚚 Driving</div>
-</div>
+  <section class="categories-section" id="categories">
+    <h2>Explore Career Categories</h2>
+    <p>Find opportunities across different industries.</p>
 
-<section class="jobs" id="jobs">
-<h2>Find Your Next Job</h2>
-<p id="resultsCount"></p>
-<div id="results" aria-live="polite"></div>
-</section>
+    <div class="categories">
+      <div class="category">🏥 Healthcare</div>
+      <div class="category">🛍️ Retail</div>
+      <div class="category">💻 Information Technology</div>
+      <div class="category">🏨 Hospitality</div>
+      <div class="category">📚 Education</div>
+      <div class="category">🏢 Administration</div>
+      <div class="category">🧹 Cleaning</div>
+      <div class="category">🚚 Driving</div>
+    </div>
+  </section>
+
+  <section class="jobs" id="jobs">
+    <h2>Discover Your Next Job</h2>
+    <p id="resultsCount"></p>
+    <div id="results" aria-live="polite"></div>
+  </section>
+
+  <section id="employers" class="employer-section">
+    <h2>Are You Hiring?</h2>
+    <p>Connect with talented job seekers across South Africa and grow your team.</p>
+    <a href="mailto:" class="employer-link">Employer enquiries</a>
+  </section>
 </main>
 
 <footer>
-<p>© 2026 Job Connect SA. All rights reserved.</p>
-<p>Connecting people with opportunities 🇿🇦</p>
+  <p>© 2026 Job Connect SA. All rights reserved.</p>
+  <p>Connecting people with opportunities. 🇿🇦</p>
 </footer>
+
 
 <script>
 // DEMO JOBS FOR TESTING SEARCH
