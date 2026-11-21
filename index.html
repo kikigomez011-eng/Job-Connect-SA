@@ -209,102 +209,23 @@ description:"Delivery and transport duties. Driving licence required."
 }
 ];
 
-function displayJobs(list) {
-const results = document.getElementById("results");
-const count = document.getElementById("resultsCount");
-
-results.innerHTML = "";
-count.textContent = list.length +
-(list.length === 1 ? " job found" : "  jobs found");
-
-if (list.length === 0) {
-results.innerHTML =
-"<div class='job notice'><h3>No matching jobs found</h3>" +
-"<p>Try another keyword or province.</p></div>";
-return;
-}
-
-list.forEach(job => {
-const card = document.createElement("div");
-card.className = "job";
-
-const title = document.createElement("h3");
-title.textContent = job.title;
-
-const company = document.createElement("p");
-company.textContent = "Company: " + job.company;
-
-const location = document.createElement("p");
-location.textContent = "Province: " + job.province;
-
-const type = document.createElement("p");
-type.textContent = "Employment: " + job.type;
-
-const description = document.createElement("p");
-description.textContent = job.description;
-
-const note = document.createElement("p");
-note.textContent = note.textContent = "Live vacancy from Adzuna";
-
-card.append(title, company, location, type, description, note);
-results.appendChild(card);
-});
-}
-
-async function searchJobs() {
-  const keyword = document.getElementById("keyword").value.trim();
-  const province = document.getElementById("province").value.trim();
-
-  const url = new URL(
-    "https://job-connect-sa-api.kikigomez011.workers.dev/api/jobs"
-  );
-
-  if (keyword) url.searchParams.set("keyword", keyword);
-  if (province) url.searchParams.set("location", province);
-
-  try {
-    const response = await fetch(url);
-    if (!response.ok) throw new Error("API request failed");
-
-    const data = await response.json();
-
-    const realJobs = (data.results || []).map(job => ({
-      title: job.title || "Untitled job",
-      company: job.company?.display_name || "Company not listed",
-      province: job.location?.display_name || "",
-      type: job.contract_type || "Not specified",
-      description: job.description || "",
-      note: "Live job listing"
-    }));
-
-    displayJobs(realJobs);
-
 
 let currentPage = 1;
-let loadedJobs = 0;
-let hasMoreJobs = false;
-let isLoadingJobs = false;
+let loadedJobs = [];
+let hasMoreJobs = true;
 
-let currentKeyword = "";
-let currentProvince = "";
-
-function displayJobs(list, append = false) {
+function displayJobs(list) {
   const results = document.getElementById("results");
   const count = document.getElementById("resultsCount");
 
-  const oldButton = document.getElementById("loadMoreJobs");
-  if (oldButton) oldButton.remove();
+  results.innerHTML = "";
 
-  if (!append) {
-    results.innerHTML = "";
-    loadedJobs = 0;
-  }
+  count.textContent = loadedJobs.length + " jobs loaded";
 
-  if (list.length === 0 && !append) {
+  if (list.length === 0) {
     results.innerHTML =
       "<div class='job notice'><h3>No matching jobs found</h3>" +
       "<p>Try another keyword or province.</p></div>";
-    count.textContent = "";
     return;
   }
 
@@ -334,44 +255,41 @@ function displayJobs(list, append = false) {
     results.appendChild(card);
   });
 
-  loadedJobs += list.length;
-  count.textContent = loadedJobs + " jobs loaded";
-
   if (hasMoreJobs) {
     const button = document.createElement("button");
-    button.id = "loadMoreJobs";
     button.textContent = "Load More Jobs";
-    button.type = "button";
-    button.onclick = loadMoreJobs;
+    button.style.cssText =
+      "display:block;margin:25px auto;padding:15px 30px;" +
+      "background:#1c4033;color:white;border:0;" +
+      "border-radius:10px;font-size:16px;cursor:pointer;";
 
+    button.onclick = loadMoreJobs;
     results.appendChild(button);
   }
 }
 
 async function fetchJobPage(page, append = false) {
+  const keyword = document.getElementById("keyword").value.trim();
+  const province = document.getElementById("province").value.trim();
+
   const url = new URL(
     "https://job-connect-sa-api.kikigomez011.workers.dev/api/jobs"
   );
 
-  if (currentKeyword) {
-    url.searchParams.set("keyword", currentKeyword);
-  }
-
-  if (currentProvince) {
-    url.searchParams.set("location", currentProvince);
-  }
+  if (keyword) url.searchParams.set("keyword", keyword);
+  if (province) url.searchParams.set("location", province);
 
   url.searchParams.set("page", page);
 
   const response = await fetch(url);
 
   if (!response.ok) {
-    throw new Error("API request failed");
+    throw new Error("Unable to load jobs");
   }
 
   const data = await response.json();
 
-  const realJobs = (data.results || []).map(job => ({
+  const newJobs = (data.results || []).map(job => ({
     title: job.title || "Untitled job",
     company: job.company?.display_name || "Company not listed",
     province: job.location?.display_name || "",
@@ -379,83 +297,42 @@ async function fetchJobPage(page, append = false) {
     description: job.description || ""
   }));
 
-  hasMoreJobs =
-    realJobs.length === 20 &&
-    (typeof data.count !== "number" || data.count > page * 20);
+  loadedJobs = append
+    ? [...loadedJobs, ...newJobs]
+    : newJobs;
 
-  displayJobs(realJobs, append);
+  currentPage = page;
+  hasMoreJobs = newJobs.length === 20 && page < 50;
+
+  displayJobs(loadedJobs);
 }
 
 async function searchJobs() {
-  if (isLoadingJobs) return;
-
-  currentKeyword =
-    document.getElementById("keyword").value.trim();
-
-  currentProvince =
-    document.getElementById("province").value.trim();
-
   currentPage = 1;
-  loadedJobs = 0;
-  hasMoreJobs = false;
-  isLoadingJobs = true;
-
-  const results = document.getElementById("results");
-  const count = document.getElementById("resultsCount");
-
-  results.innerHTML =
-    "<div class='job notice'>Loading jobs, please wait...</div>";
-  count.textContent = "";
-
-  results.scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-  });
+  loadedJobs = [];
+  hasMoreJobs = true;
 
   try {
-    await fetchJobPage(1, false);
+    await fetchJobPage(1);
   } catch (error) {
-    results.innerHTML =
+    document.getElementById("results").innerHTML =
       "<div class='job notice'><h3>Unable to load jobs</h3>" +
       "<p>Please try again shortly.</p></div>";
-    count.textContent = "";
-  } finally {
-    isLoadingJobs = false;
+
+    document.getElementById("resultsCount").textContent = "";
   }
 }
 
 async function loadMoreJobs() {
-  if (isLoadingJobs || !hasMoreJobs) return;
-
-  isLoadingJobs = true;
-
-  const button = document.getElementById("loadMoreJobs");
-
-  if (button) {
-    button.textContent = "Loading more jobs...";
-    button.disabled = true;
-  }
+  if (!hasMoreJobs) return;
 
   try {
-    currentPage++;
-    await fetchJobPage(currentPage, true);
+    await fetchJobPage(currentPage + 1, true);
   } catch (error) {
-    currentPage--;
-
-    if (button) {
-      button.textContent = "Try Again";
-      button.disabled = false;
-    }
-  } finally {
-    isLoadingJobs = false;
+    alert("Unable to load more jobs. Please try again.");
   }
 }
 
-    document.getElementById("results").innerHTML =
-      "<div class='job notice'><h3>Unable to load jobs</h3><p>Please try again shortly.</p></div>";
-    document.getElementById("resultsCount").textContent = "";
-  }
-}
 
 document.getElementById("keyword").addEventListener(
 "keydown", function(event) {
