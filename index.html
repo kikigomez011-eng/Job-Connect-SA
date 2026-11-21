@@ -301,15 +301,14 @@ async function fetchJobPage(page, append = false) {document.getElementById("resu
   }
 
   const data = await response.json();
-
-  const newJobs = (data.results || []).map(job => ({
+const newJobs = (data.results || []).map(job => ({
     title: job.title || "Untitled job",
     company: job.company?.display_name || "Company not listed",
     province: job.location?.display_name || "",
     type: job.contract_type || "Not specified",
-    description: job.description || ""
-  }));
-applyUrl: job.redirect_url || "",
+    description: job.description || "",
+    applyUrl: job.redirect_url || ""
+}));
   loadedJobs = append
     ? [...loadedJobs, ...newJobs]
     : newJobs;
