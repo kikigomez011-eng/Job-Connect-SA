@@ -389,6 +389,101 @@ footer {
     <p>Connect with talented job seekers across South Africa and grow your team.</p>
     <a href="mailto:" class="employer-link">Employer enquiries</a>
   </section>
+    <!-- EMPLOYER REGISTRATION -->
+    <section id="employer-registration" style="padding: 40px 20px; max-width: 650px; margin: 40px auto; background: #f8fafc; border-radius: 12px;">
+
+      <h2 style="text-align: center; color: #12345a;">Employer Registration</h2>
+
+      <p style="text-align: center; color: #555;">
+        Create your employer account and start connecting with job seekers across South Africa.
+      </p>
+
+      <form id="employerRegistrationForm">
+
+        <label for="companyName">Company / Business Name</label>
+        <input
+          type="text"
+          id="companyName"
+          name="companyName"
+          placeholder="Enter your company name"
+          autocomplete="organization"
+          required
+          style="width: 100%; padding: 12px; margin: 8px 0 18px; box-sizing: border-box;"
+        >
+
+        <label for="employerName">Contact Person</label>
+        <input
+          type="text"
+          id="employerName"
+          name="employerName"
+          placeholder="Your full name"
+          autocomplete="name"
+          required
+          style="width: 100%; padding: 12px; margin: 8px 0 18px; box-sizing: border-box;"
+        >
+
+        <label for="employerEmail">Business Email Address</label>
+        <input
+          type="email"
+          id="employerEmail"
+          name="employerEmail"
+          placeholder="you@company.co.za"
+          autocomplete="email"
+          required
+          style="width: 100%; padding: 12px; margin: 8px 0 18px; box-sizing: border-box;"
+        >
+
+        <label for="employerPhone">Contact Number</label>
+        <input
+          type="tel"
+          id="employerPhone"
+          name="employerPhone"
+          placeholder="e.g. 0821234567"
+          autocomplete="tel"
+          required
+          style="width: 100%; padding: 12px; margin: 8px 0 18px; box-sizing: border-box;"
+        >
+
+        <label for="employerProvince">Business Province</label>
+        <select
+          id="employerProvince"
+          name="employerProvince"
+          required
+          style="width: 100%; padding: 12px; margin: 8px 0 18px; box-sizing: border-box;"
+        >
+          <option value="">Select your province</option>
+          <option value="Eastern Cape">Eastern Cape</option>
+          <option value="Free State">Free State</option>
+          <option value="Gauteng">Gauteng</option>
+          <option value="KwaZulu-Natal">KwaZulu-Natal</option>
+          <option value="Limpopo">Limpopo</option>
+          <option value="Mpumalanga">Mpumalanga</option>
+          <option value="Northern Cape">Northern Cape</option>
+          <option value="North West">North West</option>
+          <option value="Western Cape">Western Cape</option>
+        </select>
+
+        <label for="companyWebsite">Company Website (Optional)</label>
+        <input
+          type="url"
+          id="companyWebsite"
+          name="companyWebsite"
+          placeholder="https://www.yourcompany.co.za"
+          style="width: 100%; padding: 12px; margin: 8px 0 22px; box-sizing: border-box;"
+        >
+
+        <button
+          type="button"
+          disabled
+          style="width: 100%; padding: 14px; background: #12345a; color: white; border: none; border-radius: 6px; font-size: 16px; opacity: 0.65;"
+        >
+          Registration Activation Coming Next
+        </button>
+
+      </form>
+    </section>
+    <!-- END EMPLOYER REGISTRATION -->
+
 </main>
 
 <footer>
