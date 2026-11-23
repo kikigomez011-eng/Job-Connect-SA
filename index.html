@@ -670,7 +670,10 @@ async function searchJobs() {
   hasMoreJobs = true;
 
   try {
-    await fetchJobPage(1);
+    await fetchJobPage(1);document.getElementById("results").scrollIntoView({
+  behavior: "smooth",
+  block: "start"
+});
   } catch (error) {
     document.getElementById("results").innerHTML =
       "<div class='job notice'><h3>Unable to load jobs</h3>" +
