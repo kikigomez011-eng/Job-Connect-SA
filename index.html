@@ -626,10 +626,7 @@ function displayJobs(list) {
   }
 }
 
-async function fetchJobPage(page, append = false) {document.getElementById("results").scrollIntoView({
-    behavior: "smooth",
-    block: "start"
-});
+async function fetchJobPage(page, append = false) {
   const keyword = document.getElementById("keyword").value.trim();
   const province = document.getElementById("province").value.trim();
 
