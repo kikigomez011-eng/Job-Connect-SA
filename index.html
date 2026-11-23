@@ -626,7 +626,7 @@ function displayJobs(list) {
   }
 }
 
-{if (append) document.getElementById("results").scrollIntoView({
+async function fetchJobPage(page, append = false) {document.getElementById("results").scrollIntoView({
     behavior: "smooth",
     block: "start"
 });
