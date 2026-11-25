@@ -739,7 +739,7 @@ website: document.getElementById("companyWebsite").value.trim()
     this.reset();
 
   } catch (error) {
-    message.textContent = error.message || "Registration failed. Please try again.";
+    message.textContent = "ERROR: " + error.message;
     message.style.color = "red";
 
   } finally {
