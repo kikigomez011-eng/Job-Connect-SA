@@ -473,25 +473,47 @@ footer {
           placeholder="https://www.yourcompany.co.za"
           style="width: 100%; padding: 12px; margin: 8px 0 22px; box-sizing: border-box;"
         >
+
 <label for="employerPassword">Create Password</label>
-<input
-  type="password"
-  id="employerPassword"
-  name="password"
-  placeholder="Create a secure password"
-  minlength="8"
-  autocomplete="new-password"
-  required
-  style="width: 100%; padding: 12px; margin: 8px 0 22px; box-sizing: border-box;"
->
-     <label for="confirmEmployerPassword">Confirm Password</label>
-<input
-  type="password"
-  id="confirmEmployerPassword"
-  name="confirmPassword"
-  placeholder="Confirm your password"
-  required
-  style="width: 100%; padding: 12px; margin-bottom: 15px;"
+<div style="position:relative; width:100%;">
+  <input
+    type="password"
+    id="employerPassword"
+    name="password"
+    placeholder="Create a secure password"
+    minlength="8"
+    autocomplete="new-password"
+    required
+    style="width:100%; padding:12px 50px 12px 12px; margin:8px 0; box-sizing:border-box;"
+  >
+  <button
+    type="button"
+    onclick="const p=document.getElementById('employerPassword'); p.type=p.type==='password'?'text':'password'; this.textContent=p.type==='password'?'👁️':'🙈';"
+    style="position:absolute; right:12px; top:50%; transform:translateY(-50%); border:0; background:transparent; font-size:22px;"
+  >👁️</button>
+</div>
+
+
+<label for="confirmEmployerPassword">Confirm Password</label>
+<div style="position:relative; width:100%; margin-bottom:12px;">
+  <input
+    type="password"
+    id="confirmEmployerPassword"
+    name="confirmPassword"
+    placeholder="Confirm your password"
+    minlength="8"
+    autocomplete="new-password"
+    required
+    style="width:100%; padding:12px 50px 12px 12px; box-sizing:border-box;"
+  >
+  <button
+    type="button"
+    onclick="const p=document.getElementById('confirmEmployerPassword'); p.type=p.type==='password'?'text':'password';"
+    style="position:absolute; right:12px; top:10px; border:0; background:transparent; cursor:pointer;"
+  >👁️</button>
+</div>
+
+
 >   <button
   type="submit"
   id="employerRegisterButton"
