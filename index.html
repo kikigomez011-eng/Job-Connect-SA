@@ -735,13 +735,15 @@ document.getElementById("employerRegistrationForm").addEventListener("submit", a
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-        companyName: document.getElementById("companyName").value.trim(),
-contactName: document.getElementById("employerName").value.trim(),
-email: document.getElementById("employerEmail").value.trim(),
-phone: document.getElementById("employerPhone").value.trim(),
-province: document.getElementById("employerProvince").value,
-website: document.getElementById("companyWebsite").value.trim()
-        })
+  companyName: document.getElementById("companyName").value.trim(),
+  contactName: document.getElementById("employerName").value.trim(),
+  email: document.getElementById("employerEmail").value.trim(),
+  phone: document.getElementById("employerPhone").value.trim(),
+  province: document.getElementById("employerProvince").value,
+  website: document.getElementById("companyWebsite").value.trim(),
+  password: document.getElementById("employerPassword").value,
+  confirmPassword: document.getElementById("confirmEmployerPassword").value
+})
       }
     );
 
